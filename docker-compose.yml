@@ -1,0 +1,14 @@
+services:
+  site:
+    build: .
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      edge:
+        aliases:
+          - site
+
+networks:
+  edge:
+    external: true
