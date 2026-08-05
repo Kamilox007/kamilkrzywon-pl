@@ -106,13 +106,25 @@ Składnia: `$x^2$` w linii, `$$...$$` w bloku.
 
 ## Wdrożenie
 
+## Wdrożenie
+
 Obraz dwustopniowy: Node buduje stronę, wynik trafia do obrazu z Caddym.
-Kontener serwuje wyłącznie pliki statyczne po HTTP — terminacja TLS
-i certyfikaty należą do reverse proxy stojącego przed nim.
+Kontener serwuje wyłącznie pliki statyczne po HTTP w sieci wewnętrznej —
+terminacja TLS i certyfikaty należą do reverse proxy stojącego przed nim.
+
+Tym proxy jest Caddy z repozytorium panelu
+([korepetycje](https://github.com/Kamilox007/korepetycje)). Oba kontenery
+komunikują się przez sieć `edge`, do której ten dołącza pod aliasem `site` —
+i pod taką nazwą szuka go konfiguracja proxy.
 
 ```bash
-docker compose up -d --build site
+docker network create edge     # jednorazowo, jeśli sieć jeszcze nie istnieje
+docker compose up -d --build
 ```
+
+Kolejność ma znaczenie: uruchom stronę **przed** panelem, żeby proxy miało
+dokąd kierować ruch. Sama strona bez działającego proxy nie będzie dostępna
+z internetu — nie wystawia żadnego portu na hoście.
 
 `Caddyfile.internal` celowo **nie** ma fallbacku na `index.html`: to strona
 statyczna, więc nieistniejący adres ma zwrócić 404, a nie stronę główną.
