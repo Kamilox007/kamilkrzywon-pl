@@ -1,7 +1,7 @@
 # kamilkrzywon.pl
 
 Strona osobista: portfolio projektów, notatki techniczne, CV i informacje
-o korepetycjach. Statyczna — zero JavaScriptu po stronie klienta.
+o korepetycjach.
 
 Wersja na żywo: <https://kamilkrzywon.pl>
 
